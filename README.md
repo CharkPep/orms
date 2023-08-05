@@ -7,5 +7,5 @@
 | ORM  | Insertion Time | GetAll Time | Delete time | Update time | Transaction | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | TypeORM  | 2.344s | 36.342ms | 2.721ms | 1.618ms | 130.248ms |
-|          |         | | | | 
+|          |         | | | | |
 
