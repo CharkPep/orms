@@ -3,6 +3,7 @@
 ORMs performance test:
 
 ##Insertion 
-| ORM  | Time sec |
-| ------------- | ------------- |
-| TypeORM  |  |
+| ORM  | Insertion Time ms | GetAll Time | Delete time | Update time | 
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| TypeORM  | 350.015 | | | | 
+|          |         | | | | 
