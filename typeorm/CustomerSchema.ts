@@ -10,7 +10,7 @@ export interface IUser{
 @Entity('customers_typeorm')
 @Index(['firstName', 'lastName'])
 @Entity()
-export class customers_typeorm {
+export class Customers_typeorm {
     
     @PrimaryGeneratedColumn('uuid')
     id: string;

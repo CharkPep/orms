@@ -1,5 +1,5 @@
 ﻿import {Check, Column, DataSource, Entity, Index, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {customers_typeorm as customers_typeorm} from "./CustomerSchema";
+import {Customers_typeorm as customers_typeorm} from "./CustomerSchema";
 
 export interface IUser{
     firstName : string;

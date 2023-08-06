@@ -1,5 +1,5 @@
 ﻿import {DataSource} from "typeorm";
-import {customers_typeorm} from "./CustomerSchema";
+import {Customers_typeorm} from "./CustomerSchema";
 import {BankAccount} from "./BankAccountSchema";
 
 export const AppDataSource = new DataSource({
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: "mydb",
     synchronize: true,
     logging: ['error', 'warn'],
-    entities: [customers_typeorm, BankAccount],
+    entities: [Customers_typeorm, BankAccount],
     subscribers: [],
     migrations: [],
     maxQueryExecutionTime: 1000
