@@ -37,7 +37,7 @@ async function createUser(userOpts : IUser){
     await AppDataSource.manager.save(user);
 }
 function getUser(userId : string){
-    let userRepo = AppDataSource.getRepository(Customers_typeorm); 
+    let userRepo = AppDataSource.getRepository(Customers_typeorm);
     let user = userRepo.createQueryBuilder().where('id = :id', { id : userId }).getOne();
     return user;
 }
@@ -48,7 +48,7 @@ function getAllUsers(){
     return user;
 }
 
-function deleteUser(id : string) {
+async function deleteUser(id : string) {
     let userRepo = AppDataSource.getRepository(Customers_typeorm);
     AppDataSource.getRepository(BankAccount).createQueryBuilder().delete().where('customersTypeormId = :id', { id : id }).execute();
     userRepo.createQueryBuilder().delete().where('id = :id', { id : id }).execute();
@@ -57,7 +57,7 @@ function deleteUser(id : string) {
 function updateUser(updatedUser : IUser, userId : string){
     let userRepo = AppDataSource.getRepository(Customers_typeorm);
     userRepo.createQueryBuilder().update().set(updatedUser).where('id = :id', { id : userId }).execute();
-    
+
 }
 
 function generateCustomer() : Customers_typeorm {
@@ -72,9 +72,9 @@ function generateCustomer() : Customers_typeorm {
         bankAccount.networth = parseFloat((Math.random()*999999).toFixed(2));
         customer.bankAccounts.push(bankAccount);
     }
-    
+
     return customer;
-    
+
 }
 
 
@@ -84,7 +84,7 @@ AppDataSource.initialize().then(async () => {
     console.timeEnd('connection');
 
     //<----->Insertion benchmark<----->
-    
+
     // await AppDataSource.getRepository(BankAccount).createQueryBuilder().delete().execute();
     // await AppDataSource.getRepository(Customers_typeorm).createQueryBuilder().delete().execute();
     //
@@ -104,31 +104,32 @@ AppDataSource.initialize().then(async () => {
     // );
     // console.log('Start insertion...');
     // console.time('Insertion');
-    // await userRepo.save(customersArray, { chunk : 10000 });
-    // await AppDataSource.getRepository(BankAccount).save(bankAccounts, { chunk : 10000 });
+    // await userRepo.save(customersArray, { chunk : 1000 });
+    // await AppDataSource.getRepository(BankAccount).save(bankAccounts, { chunk : 1000 });
     // console.timeEnd('Insertion')
 
-    
+
     //<----->Get all benchmark<----->
-    
+
     // console.time('Get all');
     // await getAllUsers();
     // console.timeEnd('Get all');
 
     //<----->Delete benchmark----->
-    
+
     // console.time('Delete');
-    // await deleteUser('b2ac9b0e-0bd6-408e-bbf4-89b499c95be2');
+    // await deleteUser('38dac01c-06ec-42d1-9152-075d98108d66');
     // console.timeEnd('Delete');
 
     //<----->Update benchmark----->
 
     // console.time('Update');
-    // await updateUser({ firstName : 'Liza', lastName : 'Brown', isActive : true }, '601762ff-4ea7-4820-a0b8-ce35ca3c954d');
+    // await updateUser({ firstName : 'Liza', lastName : 'Brown', isActive : true }, 
+    //     '956402d3-13e3-4b72-a599-e33f2d0363c9');
     // console.timeEnd('Update');
 
     //<----->Transaction benchmark----->
-    
+
     // console.time('Transaction')
     // await AppDataSource.transaction("REPEATABLE READ", async (transactionalEntityManager) => {
     //     const subquery = transactionalEntityManager
@@ -150,23 +151,22 @@ AppDataSource.initialize().then(async () => {
     // console.timeEnd('Transaction');
 
     //<----->Query benchmark----->
-    console.time('Query');
-    await AppDataSource.getRepository(Customers_typeorm)
-        .createQueryBuilder('c')
-        .leftJoinAndSelect('c.bankAccounts', 'b')
-        .select('c.firstName', 'firstName')
-        .addSelect('c.lastName', 'lastName')
-        .addSelect('SUM(b.networth)')
-        .groupBy('c.id, c.firstName, c.lastName')
-        .orderBy('sum', 'DESC')
-        .getMany();
-    console.timeEnd('Query');
-    
-    
+    // console.time('Query');
+    // await AppDataSource.getRepository(Customers_typeorm)
+    //     .createQueryBuilder('c')
+    //     .leftJoinAndSelect('c.bankAccounts', 'b')
+    //     .select('c.firstName', 'firstName')
+    //     .addSelect('c.lastName', 'lastName')
+    //     .addSelect('SUM(b.networth)')
+    //     .groupBy('c.id, c.firstName, c.lastName')
+    //     .orderBy('sum', 'DESC')
+    //     .getMany();
+    // console.timeEnd('Query');
+
+
 }).catch((err) => {
     console.log(err.message)
 })
-
 
 
 
