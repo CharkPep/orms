@@ -2,7 +2,7 @@
 
 
 - Local hosted PostgreSQL 14.0, default settings, Windows WSL 2.0
-- Machine: CPU 12 core, 20 GB RAM
+- Machine: SDD, CPU 12 core, 20 GB RAM
 ## Table... 
 | ORM  | Insertion Time | GetAll Time | Delete time | Update time | Transaction | Query |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
