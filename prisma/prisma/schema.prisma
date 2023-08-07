@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer{
+  id String @id @default(uuid())
+  
+  firstName String @db.Char(255) 
+  
+  lastName String @db.Char(255)
+  
+  isActive Boolean
+  
+  bank_accounts Bank_Account[]
+  
+  @@index([firstName, lastName])
+  @@map("customers_prisma")
+}
+
+model Bank_Account{
+  id String @id @default(uuid())
+  
+  networth Decimal @db.Decimal(9, 2)
+  
+  customer Customer @relation(fields: [customer_id], references: [id])
+  
+  customer_id String
+  
+  @@index([customer_id])
+  @@map("bank_accounts_prisma")
+}
+
+
+

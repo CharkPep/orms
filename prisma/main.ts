@@ -154,20 +154,20 @@ async function main() {
     // console.timeEnd('Transaction');
 
     //<----->Query benchmark<----->
-    console.time('Query');
-    let grouped = await prisma.bank_Account.groupBy({
-        by : ['customer_id'],
-        _sum : {
-            networth : true
-        }
-    })
-    let customers = await prisma.customer.findMany();
-    customers.map((element) => ({
-        firstName : element.firstName,
-        lastName : element.lastName,
-        networth : grouped.find((account) => account.customer_id = element.id)
-    }))
-    console.timeEnd('Query');
+    // console.time('Query');
+    // let grouped = await prisma.bank_Account.groupBy({
+    //     by : ['customer_id'],
+    //     _sum : {
+    //         networth : true
+    //     }
+    // })
+    // let customers = await prisma.customer.findMany();
+    // customers.map((element) => ({
+    //     firstName : element.firstName,
+    //     lastName : element.lastName,
+    //     networth : grouped.find((account) => account.customer_id = element.id)
+    // }))
+    // console.timeEnd('Query');
 
 
 
