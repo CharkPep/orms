@@ -84,29 +84,28 @@ AppDataSource.initialize().then(async () => {
     console.timeEnd('connection');
 
     //<----->Insertion benchmark<----->
+    await AppDataSource.getRepository(BankAccount).createQueryBuilder().delete().execute();
+    await AppDataSource.getRepository(Customers_typeorm).createQueryBuilder().delete().execute();
 
-    // await AppDataSource.getRepository(BankAccount).createQueryBuilder().delete().execute();
-    // await AppDataSource.getRepository(Customers_typeorm).createQueryBuilder().delete().execute();
-    //
-    // let userRepo = AppDataSource.getRepository(Customers_typeorm);
-    // let customersArray : Customers_typeorm[] = [];
-    //
-    // for (let i = 0;i < NUMBERTOINSERT;i++){
-    //     let customer = generateCustomer();
-    //     customersArray.push(customer);
-    // }
-    //
-    // let bankAccounts : BankAccount[] = customersArray.reduce(
-    //     (accumulator: BankAccount[], currentCustomer: Customers_typeorm) => {
-    //         return accumulator.concat(currentCustomer.bankAccounts);
-    //     },
-    //     []
-    // );
-    // console.log('Start insertion...');
-    // console.time('Insertion');
-    // await userRepo.save(customersArray, { chunk : 1000 });
-    // await AppDataSource.getRepository(BankAccount).save(bankAccounts, { chunk : 1000 });
-    // console.timeEnd('Insertion')
+    let userRepo = AppDataSource.getRepository(Customers_typeorm);
+    let customersArray : Customers_typeorm[] = [];
+
+    for (let i = 0;i < NUMBERTOINSERT;i++){
+        let customer = generateCustomer();
+        customersArray.push(customer);
+    }
+
+    let bankAccounts : BankAccount[] = customersArray.reduce(
+        (accumulator: BankAccount[], currentCustomer: Customers_typeorm) => {
+            return accumulator.concat(currentCustomer.bankAccounts);
+        },
+        []
+    );
+    console.log('Start insertion...');
+    console.time('Insertion');
+    await userRepo.save(customersArray, { chunk : 1000 });
+    await AppDataSource.getRepository(BankAccount).save(bankAccounts, { chunk : 1000 });
+    console.timeEnd('Insertion')
 
 
     //<----->Get all benchmark<----->
