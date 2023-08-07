@@ -97,16 +97,16 @@ async function main() {
     // console.timeEnd('Update');
 
     //<----->Transaction benchmark<----->
-    // console.time('Transaction');
-    // await knex.transaction(async (trx) => {
-    //     return trx('bank_accounts_knex').update({ networth : knex.raw('networth * 1.01')})
-    //         .whereIn('customer_id', 
-    //             knex('bank_accounts_knex')
-    //                 .select('customer_id')
-    //                 .groupBy('customer_id')
-    //                 .havingRaw('sum(networth) >= ?', [1000]))
-    // });
-    // console.timeEnd('Transaction');
+    console.time('Transaction');
+    await knex.transaction((trx) => {
+        return trx('bank_accounts_knex').update({ networth : knex.raw('networth * 1.01')})
+            .whereIn('customer_id', 
+                knex('bank_accounts_knex')
+                    .select('customer_id')
+                    .groupBy('customer_id')
+                    .havingRaw('sum(networth) >= ?', [1000]))
+    }, {isolationLevel : 'repeatable read'});
+    console.timeEnd('Transaction');
 
     //<----->Query benchmark<----->
     // console.time('Query');
